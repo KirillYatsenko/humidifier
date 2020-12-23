@@ -15,9 +15,7 @@
 #define READ_CMD 0x03
 #define START_REGISTER 0x00
 
-xSemaphoreHandle onDataReadSemaphore;
 static xSemaphoreHandle onPollingSemaphore;
-static void (*polledCallback)(void);
 
 static void init_i2c_bus()
 {
@@ -95,21 +93,21 @@ static void listen_for_polling(void *args)
         }
         else
         {
-            humidity = (raw[2] << 8 | raw[3]) / 10.0;
-            temperature = (raw[4] << 8 | raw[5]) / 10.0;
+            sensor_event_t sensor_info;
 
-            if (polledCallback != NULL)
-                polledCallback();
+            sensor_info.humidity = (raw[2] << 8 | raw[3]) / 10.0;
+            sensor_info.temperature = (raw[4] << 8 | raw[5]) / 10.0;
+            xQueueSend(sensor_queue, &sensor_info, 0);
         }
     }
 }
 
-void sensor_start_polling(void (*cb)(void))
+void sensor_start_polling(void)
 {
     ESP_LOGI(TAG, "sensor_start_polling...");
-    polledCallback = cb;
 
     onPollingSemaphore = xSemaphoreCreateBinary();
+    sensor_queue = xQueueCreate(10, sizeof(sensor_event_t));
 
     TimerHandle_t xTimer = xTimerCreate("polling timer", pdMS_TO_TICKS(1000), true, NULL, on_polling_timer);
     xTimerStart(xTimer, 0);

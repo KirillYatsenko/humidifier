@@ -1,9 +1,18 @@
 #ifndef SENSOR_H
 #define SENSOR_H
 
-double temperature;
-double humidity;
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "freertos/queue.h"
 
-void sensor_start_polling(void (*cb)(void));
+typedef struct
+{
+    double temperature;
+    double humidity;
+} sensor_event_t;
+
+xQueueHandle sensor_queue;
+
+void sensor_start_polling(void);
 
 #endif

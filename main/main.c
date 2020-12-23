@@ -7,13 +7,21 @@
 
 #define TAG "MAIN"
 
-void cb(void)
+void sensor_evt_task(void *arg)
 {
-  ESP_LOGI(TAG, "humidity = %.2f%%", humidity);
-  ESP_LOGI(TAG, "temperature = %.2f*C", temperature);
+  while (1)
+  {
+    sensor_event_t evt;
+    xQueueReceive(sensor_queue, &evt, portMAX_DELAY);
+
+    ESP_LOGI(TAG, "humidity = %.2f%%", evt.humidity);
+    ESP_LOGI(TAG, "temperature = %.2f*C", evt.temperature);
+  }
 }
 
 void app_main(void)
 {
-  sensor_start_polling(cb);
+  sensor_start_polling();
+  xTaskCreate(sensor_evt_task, "sensor_evt_task", 2048, NULL, 5, NULL);
+
 }
