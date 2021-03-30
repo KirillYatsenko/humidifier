@@ -1,0 +1,70 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" type="text/css" href="/style.css">
+    <link rel="stylesheet" type="text/css" href="/bootstrap/bootstrap.css">
+    <title>Humidifier!</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="status-info col-sm-12">
+                <h3 class="text-center">Status:
+                    <span id="status-placeholder" class="status-placeholder-stopped">
+                        Stopped
+                    </span>
+                </h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="sensor-info col-sm-12">
+                <h3 class="text-center">Humidity
+                    <strong>
+                        <span id="humidity-placeholder">40.0</span>%
+                    </strong>
+                </h3>
+                <h3 class="text-center">Temperature
+                    <strong>
+                        <span id="temperature-placeholder">20.0</span>°C
+                    </strong>
+                </h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="auto-config col-sm-12 col-md-6">
+                <p>Auto Start</p>
+                <div class="input-group">
+                    <span class="input-group-addon">
+                        <input id="autostart-enable" type="checkbox" aria-label="...">
+                    </span>
+                    <input type="text" id="autostart-value" class="form-control" aria-label="..." placeholder="Enter humidity(example 60.00%)">
+                    <span class="input-group-btn">
+                        <button onclick="save()" class="btn btn-default" type="button">Save</button>
+                    </span>
+
+                </div>
+                <span id="validation-message" class="validation-error">
+                    <!-- Correct format 15.0%. Range: 0.00 - 100.00% -->
+                </span>
+                <span id="success-message">
+                    <!-- Correct format 15.0%. Range: 0.00 - 100.00% -->
+                </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="manual-start col-sm-12 text-center">
+                <button onclick="toggleStatus()" type="button" id="toggle-start-button"
+                    class="btn btn-default btn-lg btn-lg-custom btn-turn-on">
+                    Manual Start
+                </button>
+            </div>
+        </div>
+    </div>
+    <script src="/scripts.js"></script>
+</body>
+
+</html>

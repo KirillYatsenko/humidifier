@@ -14,5 +14,6 @@ typedef struct
 xQueueHandle sensor_queue;
 
 void sensor_start_polling(void);
+sensor_event_t* sensor_get_latest(void);
 
 #endif

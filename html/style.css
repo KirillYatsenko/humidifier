@@ -1,0 +1,57 @@
+.sensor-info{
+    margin-top: 15%;
+}
+
+.auto-config{
+    margin-top: 10%;
+}
+
+.manual-start
+{
+    margin-top: 15%;
+}
+
+.btn-lg-custom{
+    font-size: 30px !important;
+  
+}
+
+.btn-turn-on
+{
+    color: #fff !important;
+    background-color: #f0ad4e !important;
+    border-color: #eea236 !important;
+}
+
+.btn-turn-off
+{
+    color: #fff !important;
+    background-color: #f12e2e !important;
+    border-color: #9e0101 !important;
+}
+
+.status-info
+{
+    margin-top: 25%;
+}
+
+#status-placeholder{
+    font-weight: bold;
+}
+
+
+.status-placeholder-working{
+    color: green;
+}
+
+.status-placeholder-stopped{
+    color: red;
+}
+
+.validation-error{
+    color:red;
+}
+
+#success-message{
+    color: green;
+}
