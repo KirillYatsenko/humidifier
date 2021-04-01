@@ -10,14 +10,18 @@
 #define TAG "SENSOR"
 
 static sensor_event_t latest_info;
-
 static xSemaphoreHandle onPollingSemaphore;
 
 static void init_communication()
 {
     ESP_LOGI(TAG, "configuring communication with DHT...");
-    gpio_pad_select_gpio(GPIO_NUM_15);
-    setDHTgpio(GPIO_NUM_15);
+    gpio_pad_select_gpio(GPIO_NUM_27);
+    setDHTgpio(GPIO_NUM_27);
+
+    // powering DHT
+    gpio_pad_select_gpio(GPIO_NUM_12);
+    gpio_set_direction(GPIO_NUM_12, GPIO_MODE_OUTPUT);
+    gpio_set_level(GPIO_NUM_12, 1);
 }
 
 static void on_polling_timer(TimerHandle_t xTimer)
@@ -57,10 +61,10 @@ void sensor_start_polling(void)
     onPollingSemaphore = xSemaphoreCreateBinary();
     sensor_queue = xQueueCreate(10, sizeof(sensor_event_t));
 
-    TimerHandle_t xTimer = xTimerCreate("polling timer", pdMS_TO_TICKS(2000), true, NULL, on_polling_timer);
+    TimerHandle_t xTimer = xTimerCreate("polling timer", pdMS_TO_TICKS(3000), true, NULL, on_polling_timer);
     xTimerStart(xTimer, 0);
 
-    xTaskCreate(listen_for_polling, "listen_for_polling", 2048, NULL, 2, NULL);
+    xTaskCreate(listen_for_polling, "listen_for_polling", 2048, NULL, configMAX_PRIORITIES -1, NULL);
 }
 
 sensor_event_t *sensor_get_latest(void)

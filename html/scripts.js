@@ -18,8 +18,6 @@ async function getSensorInfo() {
 
     humidity_elem.innerText = sensor_info_json.humidity;
     temperature_elem.innerText = sensor_info_json.temperature;
-    // autostart_value_elem.innerText = sensor_info_json.autostart_value;
-    // autostart_enable_elem.checked = sensor_info_json.autostart_enable;
 
     isWorking = sensor_info_json.status;
     updateUiStatus();
